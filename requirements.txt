@@ -1,0 +1,8 @@
+#main module
+django >4.2,<4.3
+python-decouple
+
+
+
+#database module
+psycopg[binary]
