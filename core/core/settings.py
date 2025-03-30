@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'website',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +147,5 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER",default='')
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD",default='')
 
 EMAIL_PORT = config('EMAIL_PORT',cast=int,default=25)
+
+AUTH_USER_MODEL = "accounts.User"
