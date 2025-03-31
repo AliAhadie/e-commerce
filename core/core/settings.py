@@ -149,3 +149,7 @@ EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD",default='')
 EMAIL_PORT = config('EMAIL_PORT',cast=int,default=25)
 
 AUTH_USER_MODEL = "accounts.User"
+
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+
