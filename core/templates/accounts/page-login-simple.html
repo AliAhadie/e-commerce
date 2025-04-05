@@ -1,0 +1,118 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<div
+  class="container content-space-3 content-space-t-lg-4 content-space-b-lg-3"
+>
+  <div class="flex-grow-1 mx-auto" style="max-width: 28rem">
+    <div class="text-center mb-5 mb-md-7">
+      <h1 class="h2">فرم ورود</h1>
+      <p>برای مدیریت حساب خود وارد شوید.</p>
+    </div>
+
+    <form action="{% url 'accounts:login' %}" method="post">
+      {% csrf_token %}
+
+      <div class="mb-4">
+        <label class="form-label" for="signupSimpleLoginEmail">ایمیل شما</label>
+        <input
+          type="email"
+          class="form-control form-control-lg text-center"
+          name="username"
+          id="signupSimpleLoginEmail"
+          placeholder="email@site.com"
+          required
+        />
+        <span class="invalid-feedback"
+          >لطفا یک آدرس ایمیل معتبر وارد کنید.</span
+        >
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label" for="signupSimpleLoginPassword"
+          >کلمه عبور</label
+        >
+        <div class="input-group input-group-merge">
+          <input
+            type="password"
+            class="form-control form-control-lg text-center"
+            name="password"
+            id="signupSimpleLoginPassword"
+            placeholder="8+ characters required"
+            required
+          />
+          <a
+            id="changePassTarget"
+            class="input-group-append input-group-text"
+            href="javascript:;"
+          >
+            <i id="changePassIcon" class="bi-eye"></i>
+          </a>
+        </div>
+        <span class="invalid-feedback">لطفا یک گذر واژه معتبر وارد کنید.</span>
+      </div>
+
+      <div class="d-grid mb-3">
+        <a class="form-label-link" href="#">رمز عبور را فراموش کرده‌اید؟</a>
+        <button type="submit" class="btn btn-primary btn-lg">ورود</button>
+      </div>
+
+      <div class="text-center">
+        <p>
+          حساب کاربری ندارید؟ <a class="link" href="{% url 'accounts:register' %}">اینجا ثبت نام کنید</a>
+        </p>
+      </div>
+      {% if messages %} 
+        {% for message in messages %}
+
+      <script>
+        Toastify({
+          text: "{{ message|escapejs }}",
+          className: "message-toast",
+          style: {
+            background:
+              "{% if message.tags == 'success' %}#28a745{% elif message.tags == 'error' %}#dc3545{% elif message.tags == 'warning' %}#ffc107{% else %}#17a2b8{% endif %}",
+          },
+        }).showToast();
+      </script>
+        {% endfor %} 
+      {% endif %}
+
+      {% if form.errors %}
+      <div class="alert alert-error">
+        <h4>Please fix the following errors</h4>
+        <ul>
+          {% for field in form %} 
+            {% if field.errors %} 
+              {% for error in field.errors %}
+          
+
+          <script>
+            Toastify({
+              text: "{{ field.name }} - {{ error|escapejs }}",
+              className: "error-toast",
+              style: {
+                background: "#dc3545", // قرمز برای خطاهای فرم
+              },
+            }).showToast();
+          </script>
+              {% endfor %}
+            {% endif %} 
+          {% endfor %}
+        </ul>
+        {% if form.non_field_errors %}
+        <script>
+          Toastify({
+            text: "{{ form.non_field_errors.as_text|escapejs }}",
+            className: "error-toast",
+            style: {
+              background: "#dc3545", // قرمز برای خطاهای عمومی
+            },
+          }).showToast();
+        </script>
+        {% endif %}
+      </div>
+      {% endif %} 
+      {% endblock content %}
+    </form>
+  </div>
+</div>

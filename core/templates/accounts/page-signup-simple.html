@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% load static %}
+
+{% block content %}
+<div class="container content-space-3 content-space-t-lg-4 content-space-b-lg-3">
+  <div class="flex-grow-1 mx-auto" style="max-width: 28rem;">
+    <!-- Heading -->
+    <div class="text-center mb-5 mb-md-7">
+      <h1 class="h2">فرم ثبت نام</h1>
+      <p>برای ثبت نام کافیست فرم زیر را پر نمایید</p>
+    </div>
+    <!-- End Heading -->
+
+    <!-- Form -->
+    <form method="post" action="{% url 'accounts:register' %}" class="js-validate needs-validation" novalidate>
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger text-center">
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label" for="id_email">ایمیل شما</label>
+        {{ form.email|add_class:"form-control form-control-lg text-center" }}
+        {% for error in form.email.errors %}
+          <span class="invalid-feedback d-block">{{ error }}</span>
+        {% endfor %}
+      </div>
+
+      <!-- Password1 -->
+      <div class="mb-3">
+        <label class="form-label" for="id_password1">رمز عبور</label>
+        {{ form.password1|add_class:"form-control form-control-lg text-center" }}
+        {% for error in form.password1.errors %}
+          <span class="invalid-feedback d-block">{{ error }}</span>
+        {% endfor %}
+      </div>
+
+      <!-- Password2 -->
+      <div class="mb-3">
+        <label class="form-label" for="id_password2">تأیید رمز عبور</label>
+        {{ form.password2|add_class:"form-control form-control-lg text-center" }}
+        {% for error in form.password2.errors %}
+          <span class="invalid-feedback d-block">{{ error }}</span>
+        {% endfor %}
+      </div>
+
+      <!-- Privacy Policy -->
+      <div class="form-check mb-3">
+        <input type="checkbox" class="form-check-input" id="privacyCheck" name="privacy" required>
+        <label class="form-check-label small" for="privacyCheck">
+          <a href="#">سیاست حفظ حریم خصوصی</a> را خوانده‌ام و تایید می‌کنم.
+        </label>
+        <div class="invalid-feedback">لطفاً سیاست حفظ حریم خصوصی را بپذیرید.</div>
+      </div>
+
+      <!-- Submit -->
+      <div class="d-grid mb-3">
+        <button type="submit" class="btn btn-primary btn-lg">ثبت نام</button>
+      </div>
+
+      <div class="text-center">
+        <p>از قبل حساب کاربری دارید؟ <a class="link" href="{% url 'accounts:login' %}">از اینجا وارد شوید</a></p>
+      </div>
+    </form>
+    <!-- End Form -->
+  </div>
+</div>
+{% endblock content %}
