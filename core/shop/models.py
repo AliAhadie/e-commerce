@@ -11,10 +11,33 @@ class ProductStatus(models.IntegerChoices):
 
 class Product(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    #category=
+    category=models.ManyToManyField("ProductCategory")
     title=models.CharField(max_length=250)
     slug=models.SlugField(max_length=250,unique=True)
     image=models.ImageField(upload_to='products/',default='images/product.png')
     description=models.TextField()
     stock=models.PositiveIntegerField(default=0)
     status=models.IntegerField(choices=ProductStatus.choices,default=ProductStatus.draft.value)
+    price=models.DecimalField(max_digits=10,decimal_places=2)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    discount_percnete=models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+
+class ProductCategory(models.Model):
+    title=models.CharField(max_length=250)
+    slug=models.SlugField(max_length=250,unique=True,allow_unicode=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+
+class ProductImage(models.Model):
+    product=models.ForeignKey('Product',on_delete=models.CASCADE)
+    file=models.ImageField(upload_to='products/images')
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
