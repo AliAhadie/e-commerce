@@ -11,3 +11,4 @@ class ProductCategoryAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display=['title','slug','user']
+    ordering=['-created_at']

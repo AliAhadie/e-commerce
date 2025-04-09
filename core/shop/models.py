@@ -15,7 +15,7 @@ class Product(models.Model):
     category=models.ManyToManyField("ProductCategory")
     title=models.CharField(max_length=250)
     slug=models.SlugField(max_length=250,unique=True)
-    image=models.ImageField(upload_to='products/',default='images/product.jpeg')
+    image=models.ImageField(upload_to='products/',default='images/product.png')
     description=models.TextField()
     stock=models.PositiveIntegerField(default=0)
     status=models.IntegerField(choices=ProductStatus.choices,default=ProductStatus.draft.value)

@@ -23,24 +23,18 @@ class Command(BaseCommand):
             )
             return
 
-        self.stdout.write("📦 Creating 10 categories...")
-        categories = self.create_categories()
+        categories = list(ProductCategory.objects.all())
+        if not categories:
+            self.stdout.write(
+                self.style.ERROR("❌ No categories found. Please create a category first.")
+            )
+            return
 
         self.stdout.write("🛒 Creating 10 products...")
-        self.create_products(users, categories)
+        
 
         self.stdout.write(self.style.SUCCESS("✅ Seeding completed successfully!"))
 
-    def create_categories(self):
-        categories = []
-        for _ in range(10):
-            title = fake.unique.word().capitalize()
-            slug = slugify(title, allow_unicode=True)
-            category = ProductCategory.objects.create(title=title, slug=slug)
-            categories.append(category)
-        return categories
-
-    def create_products(self, users, categories):
 
         for _ in range(10):
             user = random.choice(users)
@@ -63,8 +57,7 @@ class Command(BaseCommand):
                 discount_percnete=discount,
             )
 
-            selected_categories = random.sample(
-                categories, k=random.randint(1, len(categories))
-            )
+            # Assign random categories to the product
+            selected_categories = random.sample(categories, random.randint(1, len(categories)))
             product.category.set(selected_categories)
             product.save()

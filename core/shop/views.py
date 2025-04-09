@@ -7,7 +7,7 @@ from . models import Product,ProductStatus
 class ProuctsGridView(ListView):
     template_name='shop/products-grid.html'
     queryset=Product.objects.filter(status=ProductStatus.publish.value)
-    paginate_by=3
+    paginate_by=9
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
         context['total_products']=self.queryset.count()
@@ -16,7 +16,7 @@ class ProuctsGridView(ListView):
 
 class ProductsListView(ListView):
     template_name='shop/products-list.html'
-    paginate_by=3
+    paginate_by=9
     queryset=Product.objects.filter(status=ProductStatus.publish.value)
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
