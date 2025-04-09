@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
+from decimal import Decimal
 
 User = get_user_model()
 # Create your models here.
@@ -14,7 +15,7 @@ class Product(models.Model):
     category=models.ManyToManyField("ProductCategory")
     title=models.CharField(max_length=250)
     slug=models.SlugField(max_length=250,unique=True)
-    image=models.ImageField(upload_to='products/',default='images/product.png')
+    image=models.ImageField(upload_to='products/',default='images/product.jpeg')
     description=models.TextField()
     stock=models.PositiveIntegerField(default=0)
     status=models.IntegerField(choices=ProductStatus.choices,default=ProductStatus.draft.value)
@@ -25,6 +26,11 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_price(self):
+        discount_amount=self.price * Decimal(self.discount_percnete / 100)
+        discounted_amount=self.price - discount_amount
+        return round(discount_amount)
 
 class ProductCategory(models.Model):
     title=models.CharField(max_length=250)

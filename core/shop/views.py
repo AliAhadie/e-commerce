@@ -1,10 +1,24 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import ListView
+from . models import Product,ProductStatus
 
 # Create your views here.
 
-class ProuctsGridView(TemplateView):
+class ProuctsGridView(ListView):
     template_name='shop/products-grid.html'
+    queryset=Product.objects.filter(status=ProductStatus.publish.value)
+    paginate_by=3
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        context['total_products']=self.queryset.count()
+        return context
 
-class ProductsListView(TemplateView):
+
+class ProductsListView(ListView):
     template_name='shop/products-list.html'
+    paginate_by=3
+    queryset=Product.objects.filter(status=ProductStatus.publish.value)
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        context['total_products']=self.queryset.count()
+        return context
