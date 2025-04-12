@@ -14,7 +14,7 @@ class Product(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     category=models.ManyToManyField("ProductCategory")
     title=models.CharField(max_length=250)
-    slug=models.SlugField(max_length=250,unique=True)
+    slug = models.SlugField(max_length=250, unique=True, allow_unicode=True)
     image=models.ImageField(upload_to='products/',default='images/product.png')
     description=models.TextField()
     stock=models.PositiveIntegerField(default=0)
@@ -28,10 +28,9 @@ class Product(models.Model):
         return self.title
     
     def get_price(self):
-        discount_amount=self.price * Decimal(self.discount_percnete / 100)
-        discounted_amount=self.price - discount_amount
-        return round(discount_amount)
-
+        if self.discount_percnete:
+            return self.price - (self.price * Decimal(self.discount_percnete) / 100)
+        return self.price
 class ProductCategory(models.Model):
     title=models.CharField(max_length=250)
     slug=models.SlugField(max_length=250,unique=True,allow_unicode=True)

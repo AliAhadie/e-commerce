@@ -443,7 +443,7 @@
 
                     <div class="mb-2">
                       <h4 class="card-title">
-                        <a class="text-dark" href="/product-overview.html">{{object.title}}</a>
+                        <a class="text-dark" href="{% url 'shop:detail' slug=object.slug %}">{{object.title}}</a>
                       </h4>
                       <p class="card-text text-dark"> {{object.get_price}} تومان</p>
                     </div>

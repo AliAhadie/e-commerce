@@ -6,3 +6,7 @@ python-decouple
 
 #database module
 psycopg[binary]
+pillow
+
+#dummy data
+faker
