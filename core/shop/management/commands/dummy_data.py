@@ -7,14 +7,13 @@ from decimal import Decimal
 from shop.models import Product, ProductCategory, ProductStatus
 from django.contrib.auth import get_user_model
 
-fake = Faker('fa_IR')
+fake = Faker("fa_IR")
 User = get_user_model()
 
 
 def unique_slugify(model, title, index=0):
-    """
-    تولید slug یکتا، قابل استفاده برای فارسی
-    """
+    """FOR UNIQE SLUG"""
+
     base_slug = slugify(title, allow_unicode=True)
     if not base_slug:
         base_slug = "item"
@@ -26,12 +25,14 @@ def unique_slugify(model, title, index=0):
 
 
 class Command(BaseCommand):
-    help = "ساخت دسته‌بندی و محصول با داده‌های فیک فارسی"
+    help = "Genaret fake data with faker"
 
     def handle(self, *args, **kwargs):
         users = list(User.objects.all())
         if not users:
-            self.stdout.write(self.style.ERROR("❌ هیچ کاربری پیدا نشد. لطفاً اول کاربر بساز."))
+            self.stdout.write(
+                self.style.ERROR("❌ USER DOSENT FIND PLEASE FRIST CREATE USER!")
+            )
             return
 
         self.stdout.write("📂 CREATING CATEGORIES ...")
@@ -65,7 +66,9 @@ class Command(BaseCommand):
                 discount_percnete=discount,
             )
 
-            selected_categories = random.sample(categories, random.randint(1, len(categories)))
+            selected_categories = random.sample(
+                categories, random.randint(1, len(categories))
+            )
             product.category.set(selected_categories)
             product.save()
 

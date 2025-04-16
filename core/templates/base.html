@@ -1,5 +1,4 @@
 {% load static %}
-{% block extra_js %}{% endblock extra_js %}
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
@@ -580,6 +579,7 @@
   
     <!-- JS Front -->
     <script src="{% static 'js/theme.min.js' %}"></script>
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
   
     <!-- JS Plugins Init. -->
     <script>
@@ -677,8 +677,9 @@
         })
       })()
     </script>
+{% block extra_js %}{% endblock extra_js %}
 
-    
+
   
   </body>
   
