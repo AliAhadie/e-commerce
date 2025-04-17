@@ -11,6 +11,8 @@ from django.views.generic import TemplateView
 from django.contrib.auth import login
 
 # Create your views here.
+
+    
 class LoginView(auth_view.LoginView):
     template_name = "accounts/page-login-simple.html"
     redirect_authenticated_user = True
