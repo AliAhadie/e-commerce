@@ -1,0 +1,7 @@
+<form method="post" class="newsletter-form" action="{% url 'website:subscribe'%}">
+    {% csrf_token %}
+    {{form.as_p}}
+  
+    
+    <button type="submit" class="btn btn-primary">ثبت</button>
+  </form>
