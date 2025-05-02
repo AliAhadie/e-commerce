@@ -8,7 +8,14 @@ class CartSession():
         })
         self.session['cart']=self._cart
         
-
+    def get_cart_items(self):
+        return self._cart['items']
+    
+    def get_quntity(self):
+        quntity=0
+        for item in self._cart['items']:
+            quntity+=item['quantity']
+        return quntity
 
     def save(self):
         self.session.modified=True

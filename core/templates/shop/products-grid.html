@@ -328,26 +328,7 @@ $('#page-size-filter').change(function () {
         window.location.href = new_url
     });
 </script>
-<script>
-  function addToCart(productId) {
-    $.ajax({
-      url: "{% url 'cart:session_add_product' %}",
-      type: "POST",
-      data: {
-        product_id: productId,
-        csrfmiddlewaretoken: '{{ csrf_token }}'
-      },
-      success: function (response) {
-        // Handle success response
-        console.log(response.message);
-      },
-      error: function (xhr, status, error) {
-        // Handle error response
-        console.error(xhr.responseText);
-      }
-    });
-  }
-</script>
+
 {% endblock extra_js %}
 {% endblock content %}
 
