@@ -19,7 +19,7 @@ class Product(models.Model):
     description=models.TextField()
     stock=models.PositiveIntegerField(default=0)
     status=models.IntegerField(choices=ProductStatus.choices,default=ProductStatus.draft.value)
-    price=models.DecimalField(max_digits=10,decimal_places=2)
+    price=models.IntegerField(default=0)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     discount_percnete=models.PositiveIntegerField(default=0)
@@ -29,8 +29,8 @@ class Product(models.Model):
     
     def get_price(self):
         if self.discount_percnete:
-            return self.price - (self.price * Decimal(self.discount_percnete) / 100)
-        return self.price
+            return round(self.price - (self.price * (self.discount_percnete) / 100))
+        return (self.price)
 class ProductCategory(models.Model):
     title=models.CharField(max_length=250)
     slug=models.SlugField(max_length=250,unique=True,allow_unicode=True)

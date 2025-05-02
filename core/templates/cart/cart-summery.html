@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load humanize %}
+
 {% load static %}
 {% block content %}
     <!-- Content -->
@@ -8,7 +10,7 @@
           <!-- Heading -->
           <div class="d-flex justify-content-between align-items-end border-bottom pb-3 mb-7">
             <h1 class="h3 mb-0">سبد خرید</h1>
-            <span>2 مورد</span>
+            <span>{{cart.get_quntity}} مورد</span>
           </div>
           <!-- End Heading -->
 
@@ -16,22 +18,20 @@
           <form>
             <!-- List Group -->
             <ul class="list-group list-group-flush list-group-no-gutters mb-5">
-              {% for item in cart.get_cart_items %}
+              {% for item in cart_items %}
               <!-- Item -->
               <li class="list-group-item">
                 <div class="d-flex">
                   <div class="flex-shrink-0">
-                    <img class="avatar avatar-xl avatar-4x3" src="/assets/img/320x320/img2.jpg" alt="Image Description">
+                    <img class="avatar avatar-xl avatar-4x3" src="{{item.product_image}}" alt="Image Description">
                   </div>
 
-                  <div class="flex-grow-1 ms-3">
+                  <div class="flex-grow-1 ms-1">
                     <div class="row">
                       <div class="col-sm-7 mb-3 mb-sm-0">
-                        <h5><a class="text-dark" href="#">کوله پشتی ملی اصل</a></h5>
+                        <h5><a class="text-dark" href="#">{{item.product_name}}</a></h5>
 
-                        <div class="d-block d-sm-none">
-                          <h5 class="mb-1">$29.99</h5>
-                        </div>
+
 
                         <div class="d-grid gap-1">
                           <div class="text-body">
@@ -84,7 +84,7 @@
                       <!-- End Col -->
 
                       <div class="col-4 col-sm-2 d-none d-sm-inline-block text-right">
-                        <span class="h5 d-block mb-1">$29.99</span>
+                        <span class="h5 d-block mb-1">{{item.total_price|intcomma}} تومان</span>
                       </div>
                       <!-- End Col -->
                     </div>
@@ -127,7 +127,8 @@
 
                     <dl class="row">
                       <dt class="col-sm-6">جمع</dt>
-                      <dd class="col-sm-12 text-sm-end mb-0">350000 تومان</dd>
+                      <dd class="col-sm-12 text-sm-end mb-0">{{ total_price|intcomma }} تومان
+                      </dd>
                     </dl>
                     <!-- End Row -->
                   </div>

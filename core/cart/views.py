@@ -14,4 +14,14 @@ class SessionAddProductView(View):
 
 class SessionCartSummery(TemplateView):
     template_name = 'cart/cart-summery.html'
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        cart=CartSession(self.request.session)
+        cart_items=cart.get_cart_items()
+        context['cart_items']=cart_items
+        context['total_price']=cart.get_total_price()
+        
     
+        return context
+
