@@ -217,7 +217,7 @@
                 <div class="card-footer pt-0">
 
 
-                  <button type="button" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">افزودن به سبد خرید</button>
+                  <button type="button" class="btn btn-outline-primary btn-sm btn-transition rounded-pill" onclick="addToCart('{{object.id}}')"  >افزودن به سبد خرید</button>
                 </div>
               </div>
               <!-- End Card -->
@@ -327,6 +327,26 @@ $('#page-size-filter').change(function () {
         let new_url = window.location.pathname + "?" + current_url_params.toString()
         window.location.href = new_url
     });
+</script>
+<script>
+  function addToCart(productId) {
+    $.ajax({
+      url: "{% url 'cart:session_add_product' %}",
+      type: "POST",
+      data: {
+        product_id: productId,
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+      success: function (response) {
+        // Handle success response
+        console.log(response.message);
+      },
+      error: function (xhr, status, error) {
+        // Handle error response
+        console.error(xhr.responseText);
+      }
+    });
+  }
 </script>
 {% endblock extra_js %}
 {% endblock content %}
