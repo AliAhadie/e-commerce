@@ -1,4 +1,4 @@
-FROM python:3.10-slim-buster
+FROM python:3.12-alpine
 
 LABEL maintainer="ali.ahadi.official@gmail.com"
 
@@ -8,6 +8,18 @@ COPY ./requirements.txt .
 
 ENV PYTHONUNBUFFERED=1
 
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt && \
+    adduser \
+        --disabled-password \
+        --no-create-home \
+        django-user
+
+
+USER django-user   
+
+
+
 
 COPY ./core .
+
