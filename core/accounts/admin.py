@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User, Profile
+from django.contrib.sessions.models import Session
 
 # تنظیمات مربوط به مدل User
 
@@ -33,3 +34,9 @@ class ProfileAdmin(admin.ModelAdmin):
 
 admin.site.register(User)
 admin.site.register(Profile)
+
+@admin.register(Session)
+class SessionAdmin(admin.ModelAdmin):
+    def _session_data(self, obj):
+        return obj.get_decoded()
+    list_display = ('session_key', 'expire_date', '_session_data')
