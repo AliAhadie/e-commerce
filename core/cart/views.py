@@ -22,6 +22,7 @@ class SessionCartSummery(TemplateView):
         context['cart_items']=cart_items
         context['total_price']=cart.get_total_price()
         
+        
     
         return context
 

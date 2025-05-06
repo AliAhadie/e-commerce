@@ -2,7 +2,17 @@
 {% load humanize %}
 
 {% load static %}
+{% load cart_extras %}
 {% block content %}
+<style>
+  .containter-item {
+    display: flex;
+    gap: 2rem;
+  }
+  .containter-img {
+    border-radius: 8px !important;
+  }
+</style>
     <!-- Content -->
     <div class="container content-space-1 content-space-lg-2">
       <div class="row">
@@ -21,28 +31,31 @@
               {% for item in cart_items %}
               <!-- Item -->
               <li class="list-group-item">
-                <div class="d-flex">
+                <div class="d-flex containter-item">
                   <div class="flex-shrink-0">
-                    <img class="avatar avatar-xl avatar-4x3" src="{{item.product_image}}" alt="Image Description">
+                    <img class="avatar avatar-xl avatar-4x3 containter-img" src="{{item.product_image}}" alt="Image Description">
                   </div>
 
                   <div class="flex-grow-1 ms-1">
                     <div class="row">
-                      <div class="col-sm-7 mb-3 mb-sm-0">
+                      <div class="col-sm-7 mb-3  mb-sm-0">
                         <h5><a class="text-dark" href="#">{{item.product_name}}</a></h5>
 
 
 
                         <div class="d-grid gap-1">
                           <div class="text-body">
+                            
                             <span class="small">دسته بندی:</span>
-                            <span class="fw-semibold small">کیف</span>
+                            {% for category in item.product_obj.category.all %}
+                            <span class="fw-semibold small">{{category}}</span>
+                            {% if not forloop.last%}
+                            ,
+                            {% endif %}
+                            {% endfor %}
                           </div>
 
-                          <div class="text-body">
-                            <span class="small">رنگ:</span>
-                            <span class="fw-semibold small">خاکستری</span>
-                          </div>
+
                         </div>
                       </div>
                       <!-- End Col -->
@@ -52,17 +65,10 @@
                           <div class="col-auto">
                             <!-- Select -->
                             <select class="form-select form-select-sm mb-3">
-                              <option value="quantity1">1</option>
-                              <option value="quantity2">2</option>
-                              <option value="quantity3">3</option>
-                              <option value="quantity4">4</option>
-                              <option value="quantity5">5</option>
-                              <option value="quantity6">6</option>
-                              <option value="quantity7">7</option>
-                              <option value="quantity8">8</option>
-                              <option value="quantity9">9</option>
-                              <option value="quantity10">10</option>
-                            </select>
+                              {% for i in item.product_obj.stock|number_range %}
+                                  <option value="{{ i }}" {% if i == item.quantity %}selected{% endif %}>{{ i }}</option>
+                              {% endfor %}
+                          </select>
                             <!-- End Select -->
                           </div>
 
@@ -99,7 +105,7 @@
             <!-- End List Group -->
 
             <div class="d-sm-flex justify-content-end">
-              <a class="link" href="/products-grid.html">
+              <a class="link" href="{% url 'shop:products' %}">
                 به خرید ادامه دهید <i class="bi-chevron-left small ms-1"></i>
               </a>
             </div>

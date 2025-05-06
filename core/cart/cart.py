@@ -14,15 +14,21 @@ class CartSession:
 
     def get_cart_items(self):
         """get all items in cart"""
-        cart_items = self._cart["items"]
-        for item in cart_items:
-            product = Product.objects.get(id=item["product_id"])
-            item['product_name']= product.title
-            item['total_price'] = product.get_price() * item["quantity"]
-            item['product_image'] = product.image.url
-            
+        cart_items = []
 
-        return cart_items    
+        for item in self._cart["items"]:
+            product = Product.objects.get(id=item["product_id"])
+            cart_items.append({
+                "product_id": item["product_id"],
+                "quantity": item["quantity"],
+                "product_name": product.title,
+                "total_price": product.get_price() * item["quantity"],
+                "product_image": product.image.url,
+                "product_obj": product,  
+            })
+
+        return cart_items
+
 
 
     def get_total_price(self):
