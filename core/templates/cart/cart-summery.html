@@ -64,25 +64,29 @@
                         <div class="row">
                           <div class="col-auto">
                             <!-- Select -->
-                            <select class="form-select form-select-sm mb-3">
+                            <select class="form-select form-select-sm mb-3" onchange="changeProductQuantity('{{item.product_id}}',this.value)">
                               {% for i in item.product_obj.stock|number_range %}
-                                  <option value="{{ i }}" {% if i == item.quantity %}selected{% endif %}>{{ i }}</option>
+                                  <option  value="{{ i }}" {% if i == item.quantity %}selected{% endif %}>{{ i }}</option>
                               {% endfor %}
                           </select>
                             <!-- End Select -->
                           </div>
-
                           <div class="col-auto">
-                            <div class="d-grid gap-2">
-                              <a class="link-sm link-secondary small" href="javascript:;">
-                                <i class="bi-trash me-1"></i> حذف
-                              </a>
-
-                              <a class="link-sm link-secondary small" href="javascript:;">
-                                <i class="bi-heart-fill ms-1 "></i>جزو علایق
-                              </a>
+                            <div class="d-flex gap-3">
+                              <!-- دکمه حذف -->
+                              <button class="link-sm link-danger small border-0 d-flex align-items-center gap-1 p-1 bg-transparent transition-all"
+                                      onclick="deleteProduct('{{ item.product_id }}')">
+                                <i class="bi-trash"></i> حذف
+                              </button>
+                          
+                              <!-- دکمه علاقه‌مندی -->
+                              <button class="link-sm link-secondary small border-0 d-flex align-items-center gap-1 p-1 bg-transparent transition-all" style="white-space: nowrap;">
+                                <i class="bi-heart-fill text-danger"></i> جزو علایق
+                              </button>
                             </div>
                           </div>
+                          
+                          
                           <!-- End Col -->
                         </div>
                         <!-- End Row -->
@@ -175,6 +179,62 @@
       <!-- End Row -->
     </div>
     <!-- End Content -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      function changeProductQuantity(productId, quantity) {
+        console.log(productId, quantity);
+        $.ajax({
+          url: "{% url 'cart:session_update_product' %}",
+          type: "POST",
+          data: {
+            product_id: productId,
+            quantity:quantity,
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+          success: function (response){
+            console.log(response);
+            location.reload();
+
+          },
+          error: function (jqXHR,textStatus,errorThrown){
+            console.log(errorThrown)
+          }
+          
+          
+          
+        
+      }
+    )
+  }
+    </script>
+
+<script>
+  function deleteProduct(productId) {
+   
+    $.ajax({
+      url: "{% url 'cart:session_delete_product' %}",
+      type: "POST",
+      data: {
+        product_id: productId,
+  
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+      success: function (response){
+        console.log(response);
+        location.reload();
+
+      },
+      error: function (jqXHR,textStatus,errorThrown){
+        console.log(errorThrown)
+      }
+      
+      
+      
+    
+  }
+)
+}
+</script>
   </main>
   <!-- ========== END MAIN CONTENT ========== -->
 {% endblock content %}

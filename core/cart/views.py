@@ -11,6 +11,29 @@ class SessionAddProductView(View):
         cart.save()
         return JsonResponse({'cart':cart._cart,'total_quntity':cart.get_quntity()})
 
+class SessionUpdateProductView(View):
+    def post(self, request, *args, **kwargs):
+        cart=CartSession(request.session)
+        product_id = request.POST.get('product_id')
+        try:
+            quantity = int(request.POST.get("quantity", 1))
+        except (ValueError, TypeError):
+            quantity = 1  
+        
+        cart.update_product(product_id,quantity)
+        cart.save()
+        return JsonResponse({'cart':cart._cart,'total_quntity':cart.get_quntity()})
+    
+class SessionDeleteProductView(View):
+    def post(self,request,*args,**kwargs):   
+        cart=CartSession(request.session)
+        product_id=request.POST.get('product_id')
+        cart.remove_product(product_id)
+        cart.save()
+        return JsonResponse({'cart':cart._cart,'total_quntity':cart.get_quntity()})
+
+
+
 
 class SessionCartSummery(TemplateView):
     template_name = 'cart/cart-summery.html'
