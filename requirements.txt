@@ -4,6 +4,7 @@ python-decouple
 
 
 
+
 #database module
 psycopg[binary]
 pillow
@@ -11,3 +12,4 @@ pillow
 #dummy data
 faker
 
+django-widget-tweaks
