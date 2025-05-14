@@ -1,0 +1,203 @@
+{% extends 'dashboard/base.html'%}
+
+{% load static %}
+{% block content %}
+<main id="content" role="main" class="bg-light">
+
+    <!-- Breadcrumb -->
+    <div class="navbar-dark bg-dark" style="
+          background-image: url({% static '/svg/components/wave-pattern-light.svg' %});
+        ">
+      <div class="container content-space-1 content-space-b-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">داشبورد</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-light mb-0">
+                <li class="breadcrumb-item">حساب</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  داشبورد
+                </li>
+              </ol>
+            </nav>
+            <!-- End Breadcrumb -->
+          </div>
+          <!-- End Col -->
+
+
+
+            <!-- Responsive Toggle Button -->
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+              data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-default">
+                <i class="bi-list"></i>
+              </span>
+              <span class="navbar-toggler-toggled">
+                <i class="bi-x"></i>
+              </span>
+            </button>
+            <!-- End Responsive Toggle Button -->
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+      </div>
+    </div>
+    <!-- End Breadcrumb -->
+
+    <!-- Content Section -->
+    <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+           {% include 'dashboard/admin/sidebar.html' %}
+
+          <!-- End Navbar -->
+        </div>
+        <!-- End Col -->
+
+        <div class="col-lg-9">
+          <div class="d-grid gap-3 gap-lg-5">
+  
+
+            <!-- Card -->
+            <div class="card">
+              <div class="card-header border-bottom">
+                <h5 class="card-header-title">رمزعبور</h5>
+              </div>
+
+              <!-- Body -->
+              <div class="card-body">
+                <!-- Form -->
+                <form action="." method="post">
+                  {% csrf_token %}
+                  <!-- Form -->
+                  <div class="row mb-4">
+                    <label for="currentPasswordLabel" class="col-sm-3 col-form-label form-label">رمز عبور فعلی</label>
+
+                    <div class="col-sm-9">
+                      <input type="password" class="form-control" name="old_password" id="currentPasswordLabel"
+                        placeholder="رمز عبور فعلی را وارد کنید" aria-label="Enter current password">
+                    </div>
+                  </div>
+                  <!-- End Form -->
+
+                  <!-- Form -->
+                  <div class="row mb-4">
+                    <label for="newPassword" class="col-sm-3 col-form-label form-label">رمز عبور جدید</label>
+
+                    <div class="col-sm-9">
+                      <input type="password" class="form-control" name="new_password1" id="newPassword"
+                        placeholder="رمز عبور جدید را وارد کنید" aria-label="Enter new password">
+                    </div>
+                  </div>
+                  <!-- End Form -->
+
+                  <!-- Form -->
+                  <div class="row mb-4">
+                    <label for="confirmNewPasswordLabel" class="col-sm-3 col-form-label form-label">رمز عبور جدید را
+                      تایید کنید</label>
+
+                    <div class="col-sm-9">
+                      <div class="mb-3">
+                        <input type="password" class="form-control" name="new_password2"
+                          id="confirmNewPasswordLabel" placeholder="رمز عبور جدید را مجدد وارد کنید"
+                          aria-label="Confirm your new password">
+                      </div>
+
+                      <h5>الزامات رمز عبور:</h5>
+
+                      <p class="card-text small">اطمینان حاصل کنید که این الزامات برآورده شده است:</p>
+
+                      <ul class="small">
+                        <li>حداقل 8 کاراکتر - هر چه بیشتر باشد، بهتر است</li>
+                        <li>حداقل یک نویسه کوچک</li>
+                        <li>حداقل یک کاراکتر بزرگ</li>
+                        <li>حداقل یک عدد، نماد یا نویسه فضای خالی</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- End Form -->
+
+                  <div class="d-flex justify-content-end gap-3">
+                    
+                    <button type="submit" class="btn btn-primary">بروزرسانی رمز عبور</button>
+
+                  </div>      {% if messages %} 
+                  {% for message in messages %}
+          
+                <script>
+                  Toastify({
+                    text: "{{ message|escapejs }}",
+                    className: "message-toast",
+                    style: {
+                      background:
+                        "{% if message.tags == 'success' %}#28a745{% elif message.tags == 'error' %}#dc3545{% elif message.tags == 'warning' %}#ffc107{% else %}#17a2b8{% endif %}",
+                    },
+                  }).showToast();
+                </script>
+                  {% endfor %} 
+                {% endif %}
+          
+                {% if form.errors %}
+                <div class="alert alert-error">
+                  <h4>Please fix the following errors</h4>
+                  <ul>
+                    {% for field in form %} 
+                      {% if field.errors %} 
+                        {% for error in field.errors %}
+                    
+          
+                    <script>
+                      Toastify({
+                        text: "{{ field.name }} - {{ error|escapejs }}",
+                        className: "error-toast",
+                        style: {
+                          background: "#dc3545", // قرمز برای خطاهای فرم
+                        },
+                      }).showToast();
+                    </script>
+                        {% endfor %}
+                      {% endif %} 
+                    {% endfor %}
+                  </ul>
+                  {% if form.non_field_errors %}
+                  <script>
+                    Toastify({
+                      text: "{{ form.non_field_errors.as_text|escapejs }}",
+                      className: "error-toast",
+                      style: {
+                        background: "#dc3545", // قرمز برای خطاهای عمومی
+                      },
+                    }).showToast();
+                  </script>
+                  {% endif %}
+                </div>
+                {% endif %} 
+                
+                </form>
+                <!-- End Form -->
+              </div>
+              <!-- End Body -->
+            </div>
+            <!-- End Card -->
+
+            <!-- Card -->
+
+            <!-- End Card -->
+
+
+          </div>
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content Section -->
+  </main>
+{% endblock content %}
