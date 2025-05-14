@@ -69,7 +69,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Profile(models.Model):
     
-    user = models.OneToOneField(User, on_delete=models.CASCADE,primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,primary_key=True,related_name='user_profile')
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     image = models.ImageField(blank=True, null=True)
@@ -86,8 +86,7 @@ class Profile(models.Model):
 
 
 @receiver(post_save, sender=User)
-def create_or_delete_profile(sender, instance, created, **kwargs):
-    if instance.type == UserType.customer.value:
-        Profile.objects.get_or_create(user=instance,pk=instance.pk)  
-    else:
-        Profile.objects.filter(user=instance).delete() 
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance,pk=instance.pk)
+

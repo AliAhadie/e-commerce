@@ -1,0 +1,191 @@
+{% extends 'dashboard/base.html'%}
+
+{% load static %}
+{% block content %}
+<main id="content" role="main" class="bg-light">
+
+    <!-- Breadcrumb -->
+    <div class="navbar-dark bg-dark" style="
+          background-image: url({% static '/svg/components/wave-pattern-light.svg' %});
+        ">
+      <div class="container content-space-1 content-space-b-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">پروفایل</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-light mb-0">
+                <li class="breadcrumb-item">حساب</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  پروفایل
+                </li>
+              </ol>
+            </nav>
+            <!-- End Breadcrumb -->
+          </div>
+          <!-- End Col -->
+
+
+
+            <!-- Responsive Toggle Button -->
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+              data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-default">
+                <i class="bi-list"></i>
+              </span>
+              <span class="navbar-toggler-toggled">
+                <i class="bi-x"></i>
+              </span>
+            </button>
+            <!-- End Responsive Toggle Button -->
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+      </div>
+    </div>
+    <!-- End Breadcrumb -->
+
+    <!-- Content Section -->
+    <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+           {% include 'dashboard/admin/sidebar.html' %}
+
+          <!-- End Navbar -->
+        </div>
+        <!-- End Col -->
+<div class="col-lg-9">
+  <div class="d-grid gap-3 gap-lg-5">
+
+    <!-- ✅ فرم عکس پروفایل -->
+    <form method="post" enctype="multipart/form-data">
+      <!-- csrf_token باید اینجا باشه -->
+
+      <div class="card">
+        <div class="card-header border-bottom">
+          <h4 class="card-header-title">عکس پروفایل</h4>
+        </div>
+
+        <div class="card-body">
+          <div class="row mb-4">
+            <label class="col-sm-3 col-form-label form-label">عکس پروفایل</label>
+            <div class="col-sm-9">
+              <div class="d-flex align-items-center">
+                <label class="avatar avatar-xl avatar-circle" for="avatarUploader">
+                  <img id="avatarImg" class="avatar-img" src="./assets/img/160x160/img9.jpg"
+                       alt="Image Description">
+                </label>
+                <div class="d-grid d-sm-flex gap-2 me-4">
+                  <div class="form-attachment-btn btn btn-primary btn-sm">آپلود عکس
+                    <input type="file" name="image" class="js-file-attach form-attachment-btn-label" id="avatarUploader"
+                           data-hs-file-attach-options='{
+                             "textTarget": "#avatarImg",
+                             "mode": "image",
+                             "targetAttr": "src",
+                             "resetTarget": ".js-file-attach-reset-img",
+                             "resetImg": "./assets/img/160x160/img1.jpg",
+                             "allowTypes": [".png", ".jpeg", ".jpg"]
+                           }'>
+                  </div>
+                  <button type="button" class="js-file-attach-reset-img btn btn-white btn-sm">حذف کردن</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- دکمه ذخیره عکس -->
+        <div class="card-footer pt-0 d-flex justify-content-end gap-3">
+          <button type="submit" class="btn btn-primary">ذخیره عکس</button>
+        </div>
+      </div>
+    </form>
+    <!-- End فرم عکس پروفایل -->
+
+    <!-- ✅ فرم اطلاعات حساب -->
+    <form method="post" action=".">
+      {% csrf_token %}
+      <div class="card">
+        <div class="card-header border-bottom">
+          <h4 class="card-header-title">اطلاعات حساب</h4>
+        </div>
+
+        <div class="card-body">
+          <!-- نام و نام خانوادگی -->
+          <div class="row mb-4">
+            <label for="firstNameLabel" class="col-sm-3 col-form-label form-label">نام و نام خانوادگی</label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <input type="text" class="form-control" name="first_name" id="firstNameLabel"
+                       placeholder="مثلاً علی" value="نام">
+                <input type="text" class="form-control" name="last_name" id="lastNameLabel"
+                       placeholder="مثلاً رضایی" value="نام خانوادگی">
+              </div>
+            </div>
+          </div>
+
+          <!-- ایمیل -->
+          <div class="row mb-4">
+            <label for="emailLabel" class="col-sm-3 col-form-label form-label">ایمیل</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control" name="email" id="emailLabel" disabled
+                     >
+            </div>
+          </div>
+
+          <!-- تلفن -->
+          <div class="row mb-4">
+            <label for="phoneLabel" class="col-sm-3 col-form-label form-label">تلفن <span class="form-label-secondary">(اختیاری)</span></label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <input type="text" class="js-input-mask form-control" name="phone" id="phoneLabel"
+                       placeholder="+x(xxx)xxx-xx-xx" value="+1(605)5618929"
+                       data-hs-mask-options='{
+                         "mask": "+{0}(000)000-00-00"
+                       }'>
+              </div>
+              <div id="addPhoneFieldContainer"></div>
+              <a href="javascript:;" class="js-create-field form-link">
+                <i class="bi-plus-circle me-1"></i> تلفن را اضافه کنید
+              </a>
+            </div>
+          </div>
+
+          <!-- فیلدهای اضافه تلفن -->
+          <div id="addPhoneFieldTemplate" style="display: none; position: relative;">
+            <div class="input-group input-group-add-field">
+              <input type="text" class="js-input-mask-dynamic form-control" data-name="additionlPhone"
+                     placeholder="+x(xxx)xxx-xx-xx"
+                     data-hs-mask-options='{ "mask": "+{0}(000)000-00-00" }'>
+            </div>
+            <a class="js-delete-field input-group-add-field-delete" href="javascript:;">
+              <i class="bi-x-lg"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- دکمه ذخیره اطلاعات -->
+        <div class="card-footer pt-0 d-flex justify-content-end gap-3">
+          <button type="submit" class="btn btn-primary">ذخیره اطلاعات</button>
+        </div>
+      </div>
+    </form>
+    <!-- End فرم اطلاعات حساب -->
+
+  </div>
+</div>
+
+
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content Section -->
+  </main>
+{% endblock content %}

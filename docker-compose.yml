@@ -11,6 +11,7 @@ services:
       - POSTGRES_DB=postgres
     ports:
       - 5432:5432  
+
   backend:
     container_name: backend
     build:
@@ -20,32 +21,23 @@ services:
       - 8000:8000
     depends_on:
       - db
-    restart: always
+    user: django-user   # اینجا کاربر را تعیین کردیم که دستورها با این کاربر اجرا شوند.
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./core:/usr/src/app
-
 
   smtp4dev:
     image: rnwood/smtp4dev:v3
     restart: always
     ports:
-
       - '5000:80'
-
       - '25:25'
-
       - '143:143'
     volumes:
-
         - smtp4dev-data:/smtp4dev
     environment:
-
       - ServerOptions__Urls=http://*:80
-
       - ServerOptions__HostName=smtp4dev
 
-
-
 volumes:
-  smtp4dev-data: 
+  smtp4dev-data:
