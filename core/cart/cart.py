@@ -89,14 +89,15 @@ class CartSession:
                 self._cart["items"].remove(item)
 
         self.save()
+
     def sync_cart_from_db(self, user):
         """Sync cart items from the database to the session cart."""
         cart, created = CartModel.objects.get_or_create(user=user)
         cart_items = CartItemModel.objects.filter(cart=cart)
-
+        
         # Create a set of product IDs already in session cart
         session_product_ids = {item['product_id'] for item in self._cart["items"]}
-
+        
         for cart_item in cart_items:
             product_id = str(cart_item.product.id)
             if product_id in session_product_ids:
@@ -112,9 +113,9 @@ class CartSession:
                     'quantity': cart_item.quantity
                 }
                 self._cart['items'].append(new_item)
-        self.merge_cart_from_session_to_db(user)  
-        self.save()      
-
+        
+        self.save()
+        self.merge_cart_from_session_to_db(user)
     def merge_cart_from_session_to_db(self,user):
         """Merge cart items from the session cart to the database."""
         cart,created=CartModel.objects.get_or_create(user=user)
