@@ -17,10 +17,14 @@ class LoginView(auth_view.LoginView):
     template_name = "accounts/page-login-simple.html"
     redirect_authenticated_user = True
     authentication_form = AuthenticationForm
+    
 
 
 class LogoutView(auth_view.LogoutView):
     pass
+
+
+    
 
 
 from django.contrib.messages.views import SuccessMessageMixin
