@@ -122,7 +122,7 @@
               </li>
 
               <li class="nav-item mx-2">
-                <a class="nav-link" href="{% url 'shop:list' %}"
+                <a class="nav-link" href="{% url 'shop:products' %}"
                   >لیست محصولات</a
                 >
               </li>
@@ -227,7 +227,10 @@
                 href="{% url 'cart:session_cart_summary' %}"
               >
                 <i class="bi-basket"></i>
-                <span  class="position-absolute top-0 start-100 translate-middle badge bg-danger small px-2 py-1 mt-2" id="total-cart">
+                <span
+                  class="position-absolute top-0 start-100 translate-middle badge bg-danger small px-2 py-1 mt-2"
+                  id="total-cart"
+                >
                   {{cart.get_quntity}}
                 </span>
               </a>
@@ -252,7 +255,9 @@
                   </span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="profileDropdown">
-                  <a class="dropdown-item" href="{% url 'dashboard:home'%}">پروفایل</a>
+                  <a class="dropdown-item" href="{% url 'dashboard:home'%}"
+                    >پروفایل</a
+                  >
                   <a class="dropdown-item" href="{% url 'accounts:logout' %}"
                     >خروج</a
                   >
@@ -932,7 +937,7 @@
         });
       })();
     </script>
-    
+
     <script>
       function addToCart(productId) {
         $.ajax({
@@ -940,11 +945,11 @@
           type: "POST",
           data: {
             product_id: productId,
-            csrfmiddlewaretoken: '{{ csrf_token }}'
+            csrfmiddlewaretoken: "{{ csrf_token }}",
           },
           success: function (response) {
             // Handle success response
-            $('#total-cart').text(response.total_quntity);
+            $("#total-cart").text(response.total_quntity);
             Toastify({
               text: "محصول با موفقیت به سبد خرید اضافه شد",
               duration: 3000,
@@ -958,7 +963,7 @@
           error: function (xhr, status, error) {
             // Handle error response
             console.error(xhr.responseText);
-          }
+          },
         });
       }
     </script>
