@@ -28,7 +28,7 @@ SECRET_KEY = 'test'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]# Application definition
 
@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-if DEBUG:
+if not DEBUG:
     DATABASES={
         'default': dj_database_url.config(default=config('DATABASE_URL'))
     }
