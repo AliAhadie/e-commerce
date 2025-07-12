@@ -30,8 +30,7 @@ SECRET_KEY = 'test'
 
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1', 'e-commerce-1-dlwi.onrender.com']
-# Application definition
+ALLOWED_HOSTS = ["*"]# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
