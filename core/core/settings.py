@@ -28,7 +28,7 @@ SECRET_KEY = 'test'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]# Application definition
 
