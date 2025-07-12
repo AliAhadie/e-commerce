@@ -87,18 +87,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-if not DEBUG:
+if DEBUG:
     DATABASES={
         'default': dj_database_url.config(default=config('DATABASE_URL'))
     }
 
-else:
-    DATABASES={
-        'default':{
-            'ENGINE':'sqlite',
-            'NAME': BASE_DIR / 'db.sqlite3'
-        }
-    }
 
 
 # Password validation
