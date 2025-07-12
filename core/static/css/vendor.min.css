@@ -3000,7 +3000,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   margin: 5px -10px 5px -6px;
 }
 .leaflet-default-icon-path {
-  background-image: url(images/marker-icon.png);
+  
 }
 .leaflet-container .leaflet-control-attribution {
   background: #fff;
